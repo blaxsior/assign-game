@@ -8,6 +8,6 @@ export class AppController {
   @Get()
   @Render('index')
   root() {
-    return {message: "hello, world"};
+    return {width: "1000", height: "450"};
   }
 }
