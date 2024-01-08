@@ -1,5 +1,8 @@
-import { BarView } from "./BarView.js";
-import { GameView } from "./GameView.js";
+import { convertAngleToRad } from "./util/math.js";
+import { BarView } from "./view/panel/BarView.js";
+import { GameScreenView } from "./view/screen/GameScreenView.js";
+import { GunView } from "./view/screen/components/GunView.js";
+import { connectSocket } from "./ws/websocket.js";
 
 const bar = {
     state: 0,
@@ -20,7 +23,7 @@ const bar = {
             this.state = this.from;
         }
     }
-}
+};
 // 초기에 게임 관련 정보 (bar 각도 등) 가져오도록 코드 작성
 
 function main() {
@@ -32,9 +35,15 @@ function main() {
     barView.render(bar.state);
 
     const canvas = document.querySelector('canvas');
-    const gameView = new GameView(canvas);
+    const gunView = new GunView();
+    const gameScreenView = new GameScreenView(canvas, gunView);
 
-    gameView.render(bar.state);
+    gameScreenView.render({
+        gun: {
+            direction: [1, 0],
+            position: [canvas.clientWidth / 2, canvas.clientHeight - 4]
+        }
+    });
 
     const diff = 3;
     // key mapping
@@ -42,14 +51,29 @@ function main() {
         if (e.key === 'a') {
             bar.dec(diff);
             barView.render(bar.state);
-            gameView.render(bar.state);
+
+            const angle = convertAngleToRad(bar.state);
+            gameScreenView.render({
+                gun: {
+                    direction: [Math.cos(angle), Math.sin(angle)],
+                    position: [canvas.clientWidth / 2, canvas.clientHeight - 4]
+                }
+            });
         }
         if (e.key === 'd') {
             bar.inc(diff);
             barView.render(bar.state);
-            gameView.render(bar.state);
+
+            const angle = convertAngleToRad(bar.state);
+            gameScreenView.render({
+                gun: {
+                    direction: [Math.cos(angle), Math.sin(angle)],
+                    position: [canvas.clientWidth / 2, canvas.clientHeight - 4]
+                }
+            });
         }
     });
 }
 
 main();
+connectSocket();
