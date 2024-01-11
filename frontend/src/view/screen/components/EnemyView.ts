@@ -1,20 +1,19 @@
-import type { GameObjectPacketType } from "../../../interface/packet";
-import { rotate } from "../../../util/drawing";
+import { rotateByDirection } from "../../../util/drawing";
+
+import type { GameObjectData } from "../../../interface/packet";
 
 export class EnemyView {
-  render(ctx: CanvasRenderingContext2D, objData: GameObjectPacketType) {
+  render(ctx: CanvasRenderingContext2D, objData: GameObjectData) {
     // 적의 모양
-    const rectHalfWidth = 5;
-    const rectHalfHeight = 5;
+    const rectHalfWidth = 30;
+    const rectHalfHeight = 20;
 
     const [x, y] = objData.position;
-    const [x_angle, y_angle] = objData.direction;
 
-    const angle = (Math.atan2(y_angle, x_angle) * 180) / Math.PI;
-    rotate(ctx, x, y, angle);
+    rotateByDirection(ctx, x, y, objData.direction);
     // 회전된 직사각형 그리기
-    ctx.fillStyle = '#3E2723'; // 
-    ctx.fillRect(x - rectHalfWidth, y - rectHalfHeight, rectHalfHeight * 2, rectHalfHeight * 2);
+    ctx.fillStyle = '#7DC0A7'; // 
+    ctx.fillRect(x - rectHalfWidth, y - rectHalfHeight, rectHalfWidth * 2, rectHalfHeight * 2);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 }

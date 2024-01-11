@@ -1,21 +1,27 @@
-export type Packet = {
-  objects: ScreenPacketType;
-  player: PanelPacketType;
-};
+export type viewData = {
+  objects: ScreenData;
 
-export type ScreenPacketType = {
-  enemies: GameObjectPacketType[];
-  bullets: GameObjectPacketType[];
-  gun?: GameObjectPacketType;
-};
-
-export type PanelPacketType = {
   hp?: number;
   score?: number;
   angle?: number;
 };
 
-export type GameObjectPacketType = {
+export type ScreenData = {
+  enemies: GameObjectData[];
+  bullets: GameObjectData[];
+  gun?: GameObjectData;
+};
+
+export type UpPanelData = {
+  hp?: number;
+  score?: number;
+};
+
+export type DownPanelData = {
+  angle?: number;
+};
+
+export type GameObjectData = {
   direction: Vec2D;
   position: Vec2D;
 };
