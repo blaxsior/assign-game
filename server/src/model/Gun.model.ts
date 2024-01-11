@@ -32,7 +32,6 @@ export class Gun extends GameObject {
   }
 
   fire(): Bullet | null {
-    if (!this.bulletSpawner.canSpawn()) return null;
     this.bulletSpawner.setBulletInitialDirection(this.getDirection());
     this.bulletSpawner.setBulletInitialPosition(this.getPosition());
 
@@ -47,7 +46,7 @@ export class Gun extends GameObject {
 
     // 각도 - 방향 보정
     // 0도가 가리키는 방향은 270도에 해당. 원 각도에서 90도를 빼서 올바른 방향을 지정한다.
-    const rad = convertAngleToRad(angle);
+    const rad = convertAngleToRad(this.angle);
 
     this.direction[0] = Math.sin(rad);
     this.direction[1] = -Math.cos(rad);

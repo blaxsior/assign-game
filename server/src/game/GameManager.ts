@@ -15,14 +15,15 @@ import { type BulletInfo, BulletSpawner } from '../model/BulletSpawner.model';
 import { UserAction } from '../interface/user-action';
 import type { Vec2D } from '../interface/vector';
 import type { NumRange } from '../interface/range';
+import { GameData } from 'src/interface/packet';
 
 @Injectable({
   scope: Scope.TRANSIENT,
 })
 export class GameManager {
   // 화면의 가로 / 세로는 고정된 값으로 가정
-  private screen_width: number = 500;
-  private screen_height: number = 400;
+  private screen_width: number = 1000;
+  private screen_height: number = 800;
 
   // 게임을 구성하는 객체들
   private player: Player;
@@ -32,11 +33,36 @@ export class GameManager {
   private enemySpawner: EnemySpawner;
   private collisionManager: CollisionManager;
 
-  constructor() {}
+  private game_running: boolean;
+
+  constructor() {
+    console.log('constructor');
+    this.game_running = false;
+  }
+
+  isGameRunning() {
+    return this.game_running;
+  }
+
+  startGame() {
+    this.game_running = true;
+  }
+
+  stopGame() {
+    this.game_running = false;
+  }
+
+  getScreenSize() {
+    return {
+      width: this.screen_width,
+      height: this.screen_height,
+    };
+  }
+
   /**
-   * 게임 내 필요한 객체를 초기화하는 메서드
+   * 게임 내 필요한 객체를 초기화한다.
    */
-  init() {
+  initGame() {
     // 충돌 매니저 설정
     const collisionStrategy = new AABBDetectionStrategy();
     this.collisionManager = new CollisionManager(collisionStrategy);
@@ -49,13 +75,13 @@ export class GameManager {
     const max_bullet_count = 3;
     const bullet_info: BulletInfo = {
       collider: [
-        [-1, -1],
-        [-1, 1],
-        [1, 1],
-        [1, -1],
+        [-3, -3],
+        [-3, 3],
+        [3, 3],
+        [3, -3],
       ],
-      demage: 3,
-      speed: 5,
+      demage: 5,
+      speed: 10,
     };
     const bulletSpawner = new BulletSpawner(max_bullet_count, bullet_info);
 
@@ -77,24 +103,28 @@ export class GameManager {
     };
     const enemy_info: EnemyInfo = {
       demage: 3,
-      direction: [0, 1], // 아래로 향하는 방향
+      direction: [0, 1], // 아래로 향하는 방향a
       collider: [
-        [-5, -5],
-        [5, -5],
-        [5, 5],
-        [-5, 5],
+        [-30, -20],
+        [30, -20],
+        [30, 20],
+        [-30, 20],
       ],
       hp: 10,
-      range_speed: { from: 3, to: 6 },
-      range_xpos: { from: 30, to: this.screen_width - 30 },
+      range_speed: { from: 1, to: 6 },
+      range_xpos: { from: 50, to: this.screen_width - 50 },
       ypos: 50,
     };
 
     this.enemySpawner = new EnemySpawner(enemy_range_time_interval, enemy_info);
-  }
 
-  run() {
-    if (this.player.isDead()) return; // 적이 죽었으므로 끝
+    this.game_running = false;
+  }
+  /**
+   * 게임을 한 프레임 만큼 실행한다.
+   */
+  run(): GameData {
+    if (this.player.isDead()) return; // 적이 죽었거나, 게임이 실행 중이 아님
     // 적을 생성하고 할당하는 로직
     const new_enemy = this.enemySpawner.spawn();
     new_enemy && this.enemies.push(new_enemy);
@@ -134,8 +164,12 @@ export class GameManager {
     // 비활성화된 게임 오브젝트들을 리스트에서 제거한다.
     this.deleteExpiredObjs(this.enemies);
     this.deleteExpiredObjs(this.bullets);
+  }
 
-    // 업데이트 요소들을 반환한다.
+  /**
+   * 현재 시뮬레이션 되고 있는 게임의 상태를 반환한다.
+   */
+  getCurrentGameState(): GameData {
     return {
       objects: {
         enemies: this.enemies.map((it) => ({
@@ -151,12 +185,12 @@ export class GameManager {
           position: this.gun.getPosition(),
         },
       },
-      player: {
-        hp: this.player.getHp(),
-        score: this.player.getScore(),
-      },
+      hp: this.player.getHp(),
+      score: this.player.getScore(),
+      angle: this.gun.getAngle(),
     };
   }
+
   /**
    * 사용자의 입력에 대응한다. UserAction에 맞지 않는 문자열의 요청이 올 경우 무시한다.
    * @param action 사용자가 요청한 액션을 의미하는 문자열
@@ -164,10 +198,10 @@ export class GameManager {
   onInput(action: string) {
     switch (action) {
       case UserAction.ROT_LEFT:
-        this.gun.rotate(-3);
+        this.gun.rotate(-5);
         break;
       case UserAction.ROT_RIGHT:
-        this.gun.rotate(3);
+        this.gun.rotate(5);
         break;
       case UserAction.FIRE:
         const bullet = this.gun.fire();
