@@ -57,7 +57,7 @@ export class GameController {
       this.updateView(data);
     });
 
-    // 게임 종료 시 연결할 액션에 해당
+    // 게임 종료 시 연결할 액션.
     this.socket.on('game-over', () => {
       console.log('game over!');
     });

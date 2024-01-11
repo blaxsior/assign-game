@@ -1,5 +1,5 @@
 export class ShowInfoView extends HTMLElement {
-  private valueView: HTMLInputElement;
+  private valueElem: HTMLInputElement;
 
   constructor(label: string) {
     super();
@@ -9,7 +9,7 @@ export class ShowInfoView extends HTMLElement {
     const labelElem = shadow.querySelector('#label') as HTMLDivElement;
     labelElem.textContent = label;
 
-    this.valueView = shadow.querySelector('#value') as HTMLInputElement;
+    this.valueElem = shadow.querySelector('#value') as HTMLInputElement;
   }
 
   private initElement() {
@@ -33,7 +33,7 @@ export class ShowInfoView extends HTMLElement {
   }
 
   render(data: number) {
-    this.valueView.value = `${data}`;
+    this.valueElem.value = `${data}`;
   }
 }
 
