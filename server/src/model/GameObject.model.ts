@@ -5,7 +5,6 @@ export abstract class GameObject {
   protected direction: Vec2D;
 
   protected obj_expired: boolean;
-  protected obj_activated: boolean;
 
   constructor(position: Vec2D, direction: Vec2D) {
     this.position = [...position];

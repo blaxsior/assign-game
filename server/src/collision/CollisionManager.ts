@@ -1,5 +1,5 @@
 import { CollisibleGameObject } from '../model/CollisibleGameObject.model';
-import type { ICollisionDetectionStrategy } from './collision.strategy';
+import type { ICollisionDetectionStrategy } from './strategy/collision.strategy';
 
 export class CollisionManager {
   constructor(private strategy: ICollisionDetectionStrategy) {}

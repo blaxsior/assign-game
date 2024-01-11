@@ -1,6 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 
-import { AABBDetectionStrategy } from '../collision/AABB.strategy';
+import { AABBDetectionStrategy } from '../collision/strategy/AABB.strategy';
 import { CollisionManager } from '../collision/CollisionManager';
 
 import { GameObject } from '../model/GameObject.Model';
@@ -124,7 +124,7 @@ export class GameManager {
    * 게임을 한 프레임 만큼 실행한다.
    */
   run(): GameData {
-    if (this.player.isDead()) return; // 적이 죽었거나, 게임이 실행 중이 아님
+    if (!this.game_running || this.player.isDead()) return; // 적이 죽었거나, 게임이 실행 중이 아님
     // 적을 생성하고 할당하는 로직
     const new_enemy = this.enemySpawner.spawn();
     new_enemy && this.enemies.push(new_enemy);
@@ -156,6 +156,7 @@ export class GameManager {
     this.expireOutObjs(this.enemies);
     this.expireOutObjs(this.bullets);
 
+    // 화면 바깥으로 적이 나간 경우 플레이어의 체력을 깎는다.
     for (const enemy of this.enemies) {
       if (!enemy.isDead() && enemy.isExpired())
         this.player.takeDamage(enemy.getDemage());
