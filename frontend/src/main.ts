@@ -1,34 +1,22 @@
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-import { GameScreenView } from './view/screen/GameScreenView.js';
-import { connectSocket } from './ws/websocket.js';
-
-import type { Packet } from './interface/packet.js';
+import { GameView } from './view/GameView.js';
+import { GameController } from './controller/GameController.js';
 
 function main() {
-  const canvas = document.querySelector('canvas')!;
-  const gameScreenView = new GameScreenView(canvas);
+  const gameContainer = document.querySelector('#gameContainer') as HTMLDivElement;
+  const gameView = new GameView(gameContainer, { width: 1000, height: 800 });
 
   const socket = io('http://localhost:8001');
+  const gameController = new GameController(socket, gameView);
 
-  socket.on('connect', () => {
-    console.log('connected');
-    socket.emit('init');
-  });
-
-  socket.on('init', (message: string) => {
-    console.log(message);
-    socket.emit("run");
-  });
-
-  socket.on('run', (data: Packet) => {
-    gameScreenView.render(data.objects);
-  });
-
-  socket.on('game over', () => {
-    console.log('game over!');
-  });
+  gameController.bindUserAction();
+  gameController.bindServerAction();
+  gameController.initGame();
+  // 서버에서 게임을 초기화 할 시간을 줘야 한다.
+  setTimeout(() => {
+    gameController.runGame();
+  }, 100);
 }
 
 main();
-connectSocket();
