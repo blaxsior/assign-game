@@ -1,7 +1,7 @@
-import { CollisibleGameObject } from '../model/CollisibleGameObject.model';
+import { CollisibleGameObject } from '../../model/CollisibleGameObject.model';
 
 import type { ICollisionDetectionStrategy } from './collision.strategy';
-import { Vec2D } from '../interface/vector';
+import { Vec2D } from '../../interface/vector';
 
 export class OBBDetectionStrategy implements ICollisionDetectionStrategy {
   checkCollision(obj1: CollisibleGameObject, obj2: CollisibleGameObject) {
@@ -16,6 +16,7 @@ export class OBBDetectionStrategy implements ICollisionDetectionStrategy {
 
     const world_collider1 = this.getColliderWorldPos(position1, collider1);
     const world_collider2 = this.getColliderWorldPos(position2, collider2);
+    // TODO: 알고리즘 마저 구현
 
     return true;
   }

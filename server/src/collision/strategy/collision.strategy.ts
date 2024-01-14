@@ -1,4 +1,4 @@
-import { CollisibleGameObject } from '../model/CollisibleGameObject.model';
+import { CollisibleGameObject } from '../../model/CollisibleGameObject.model';
 
 export interface ICollisionDetectionStrategy {
   checkCollision(
