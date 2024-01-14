@@ -1,10 +1,10 @@
-import { BulletSpawner } from './BulletSpawner.model';
 import { GameObject } from './GameObject.Model';
 import { Bullet } from './Bullet.model';
 import { convertAngleToRad } from '../util/math';
 
 import type { NumRange } from '../interface/range';
 import type { Vec2D } from '../interface/vector';
+import type { IBulletSpawner } from '../interface/bulletspawner';
 
 export class Gun extends GameObject {
   /**
@@ -17,13 +17,13 @@ export class Gun extends GameObject {
    */
   private angle: number;
 
-  private bulletSpawner: BulletSpawner;
+  private bulletSpawner: IBulletSpawner;
 
   constructor(
     pos: Vec2D,
     dir: Vec2D,
     range_angle: NumRange,
-    bulletSpawner: BulletSpawner,
+    bulletSpawner: IBulletSpawner,
   ) {
     super(pos, dir);
     this.range_angle = range_angle;
@@ -31,7 +31,7 @@ export class Gun extends GameObject {
     this.bulletSpawner = bulletSpawner;
   }
 
-  fire(): Bullet | null {
+  fire(): Bullet[] {
     this.bulletSpawner.setBulletInitialDirection(this.getDirection());
     this.bulletSpawner.setBulletInitialPosition(this.getPosition());
 

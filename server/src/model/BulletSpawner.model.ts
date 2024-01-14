@@ -1,10 +1,10 @@
 import { Bullet } from './Bullet.model';
-
-import type { ISpawner } from '../interface/spawner';
-import type { Vec2D } from '../interface/vector';
 import { GameObject } from './GameObject.Model';
 
-export class BulletSpawner implements ISpawner<Bullet> {
+import type { Vec2D } from '../interface/vector';
+import type { BulletInfo, IBulletSpawner } from '../interface/bulletspawner';
+
+export class LimitCountBulletSpawner implements IBulletSpawner {
   private max_count: number;
 
   private bullet_position: Vec2D | null;
@@ -31,9 +31,9 @@ export class BulletSpawner implements ISpawner<Bullet> {
     this.bullet_speed = bulletInfo.speed;
   }
 
-  spawn(): Bullet | null {
+  spawn(): Bullet[] {
     this.removeExpiredBullets();
-    if (!this.canSpawn()) return null;
+    if (!this.canSpawn()) return [];
     if (!this.bullet_direction || !this.bullet_position) {
       throw new Error('bullet_position and direction must be set');
     }
@@ -50,7 +50,7 @@ export class BulletSpawner implements ISpawner<Bullet> {
     this.bullet_position = null;
     this.bullet_direction = null;
 
-    return bullet;
+    return [bullet];
   }
   /**
    * 총알의 상태를 검사, 만료된 경우 제거한다.
@@ -76,12 +76,3 @@ export class BulletSpawner implements ISpawner<Bullet> {
     return this.bullets.length < this.max_count;
   }
 }
-
-/**
- * 총알에 대한 기본 정보
- */
-export type BulletInfo = {
-  collider: Vec2D[];
-  demage: number;
-  speed: number;
-};

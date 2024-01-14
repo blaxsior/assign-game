@@ -34,8 +34,8 @@ export class EnemySpawner implements ISpawner<Enemy> {
     this.enemy_ypos = enemyInfo.ypos;
   }
 
-  spawn(): Enemy | null {
-    if (!this.canSpawn()) return null;
+  spawn(): Enemy[] {
+    if (!this.canSpawn()) return [];
     // 생성 가능 시간 갱신
     this.available_spawn_time = this.calculateNextSpawnTime();
 
@@ -54,7 +54,7 @@ export class EnemySpawner implements ISpawner<Enemy> {
       this.enemy_hp,
     ); // 적 생성
 
-    return enemy;
+    return [enemy];
   }
 
   canSpawn(): boolean {

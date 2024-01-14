@@ -10,12 +10,13 @@ import { Bullet } from '../model/Bullet.model';
 import { Enemy } from '../model/Enemy.model';
 
 import { type EnemyInfo, EnemySpawner } from '../model/EnemySpawner.model';
-import { type BulletInfo, BulletSpawner } from '../model/BulletSpawner.model';
+import { LimitCountBulletSpawner } from '../model/BulletSpawner.model';
 
 import { UserAction } from '../interface/user-action';
 import type { Vec2D } from '../interface/vector';
 import type { NumRange } from '../interface/range';
 import { GameData } from 'src/interface/packet';
+import { BulletInfo } from 'src/interface/bulletspawner';
 
 @Injectable({
   scope: Scope.TRANSIENT,
@@ -83,7 +84,10 @@ export class GameManager {
       demage: 5,
       speed: 10,
     };
-    const bulletSpawner = new BulletSpawner(max_bullet_count, bullet_info);
+    const bulletSpawner = new LimitCountBulletSpawner(
+      max_bullet_count,
+      bullet_info,
+    );
 
     // Gun 설정
     const gunPosition: Vec2D = [this.screen_width / 2, this.screen_height - 5];
@@ -126,9 +130,8 @@ export class GameManager {
   run(): GameData {
     if (!this.game_running || this.player.isDead()) return; // 적이 죽었거나, 게임이 실행 중이 아님
     // 적을 생성하고 할당하는 로직
-    const new_enemy = this.enemySpawner.spawn();
-    new_enemy && this.enemies.push(new_enemy);
-
+    const new_enemies = this.enemySpawner.spawn();
+    this.enemies.push(...new_enemies);
     // 적과 총알의 움직임을 시뮬레이션한다.
     // 장기적으로는 this.gameObjects.forEach((it) => it.update());
     // 처럼 처리할 수 있다면 좋겠다.
@@ -205,8 +208,8 @@ export class GameManager {
         this.gun.rotate(5);
         break;
       case UserAction.FIRE:
-        const bullet = this.gun.fire();
-        bullet && this.bullets.push(bullet);
+        const new_bullets = this.gun.fire();
+        this.bullets.push(...new_bullets);
         break;
     }
   }
