@@ -10,13 +10,13 @@ import { Bullet } from '../model/Bullet.model';
 import { Enemy } from '../model/Enemy.model';
 
 import { type EnemyInfo, EnemySpawner } from '../model/EnemySpawner.model';
-import { LimitCountBulletSpawner } from '../model/BulletSpawner.model';
+import { LimitCountBulletSpawner } from '../model/LimitBulletSpawner.model';
 
 import { UserAction } from '../interface/user-action';
 import type { Vec2D } from '../interface/vector';
 import type { NumRange } from '../interface/range';
 import { GameData } from 'src/interface/packet';
-import { BulletInfo } from 'src/interface/bulletspawner';
+import { BulletInfo } from 'src/model/BulletSpawner.model';
 
 @Injectable({
   scope: Scope.TRANSIENT,
