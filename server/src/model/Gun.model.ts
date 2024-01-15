@@ -1,6 +1,6 @@
 import { GameObject } from './GameObject.Model';
 import { Bullet } from './Bullet.model';
-import { convertAngleToRad } from '../util/math';
+import { angleToRad } from '../util/math';
 
 import type { NumRange } from '../interface/range';
 import type { Vec2D } from '../interface/vector';
@@ -46,7 +46,7 @@ export class Gun extends GameObject {
 
     // 각도 - 방향 보정
     // 0도가 가리키는 방향은 270도에 해당. 원 각도에서 90도를 빼서 올바른 방향을 지정한다.
-    const rad = convertAngleToRad(this.angle);
+    const rad = angleToRad(this.angle);
 
     this.direction[0] = Math.sin(rad);
     this.direction[1] = -Math.cos(rad);
