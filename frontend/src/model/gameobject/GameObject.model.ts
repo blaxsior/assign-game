@@ -1,7 +1,7 @@
 import { Component } from '../component/Component';
 import type { IConstructor } from '../../interface/ctor';
 import { Transform } from '../component/common/Transform';
-import { ObjectManager } from '../manager/object/ObjectManager';
+// import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class GameObject {
   protected components: Map<IConstructor<Component>, Component>;
@@ -14,7 +14,7 @@ export class GameObject {
   constructor() {
     this.components = new Map();
     this.obj_expired = false;
-    ObjectManager.instance.manageObject(this);
+    // ObjectManager.instance.manageObject(this);
   }
 
   /**

@@ -4,10 +4,10 @@ import { GameObject } from "../../gameobject/GameObject.model";
 export class ObjectManager {
   private gameObjects: GameObject[];
 
-  private static manager: ObjectManager|null = null;
+  private static manager: ObjectManager | null = null;
 
   static get instance(): ObjectManager {
-    if(!this.manager) {
+    if (!this.manager) {
       this.manager = new ObjectManager();
     }
     return this.manager;
@@ -17,7 +17,10 @@ export class ObjectManager {
     this.gameObjects = [];
   }
 
-  createObject<T extends GameObject>(ctor: IConstructor<T>, ...args: ConstructorParameters<typeof ctor>) {
+  createObject<T extends GameObject, P extends any[]>(
+    ctor: IConstructor<T, P>,
+    ...args: ConstructorParameters<typeof ctor>
+  ) {
     const gameObject = new ctor(...args);
     this.manageObject(gameObject);
     return gameObject;
