@@ -1,4 +1,4 @@
-import { GameObject } from './GameObject.Model';
+import { GameObject } from './GameObject.model';
 
 export class Player extends GameObject {
   private hp: number;
@@ -7,6 +7,7 @@ export class Player extends GameObject {
   constructor(hp: number) {
     super();
     this.hp = hp;
+    this.score = 0;
   }
 
   takeDamage(demage: number) {

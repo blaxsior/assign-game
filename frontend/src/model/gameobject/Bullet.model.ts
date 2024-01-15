@@ -1,10 +1,10 @@
-import { GameObject } from './GameObject.Model';
-import { Transform } from './component/common/Transform';
-import { Collider } from './component/common/Collider';
+import { GameObject } from './GameObject.model';
+import { Transform } from '../component/common/Transform';
+import { Collider } from '../component/common/Collider';
 
 import { Enemy } from './Enemy.model';
 
-import type { Vec2D } from '../interface/vector';
+import type { Vec2D } from '../../interface/vector';
 
 export class Bullet extends GameObject {
   private demage: number;

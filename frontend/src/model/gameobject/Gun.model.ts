@@ -1,11 +1,11 @@
-import { GameObject } from './GameObject.Model';
+import { GameObject } from './GameObject.model';
 import { Bullet } from './Bullet.model';
 
-import type { NumRange } from '../interface/range';
-import type { Vec2D } from '../interface/vector';
+import type { NumRange } from '../../interface/range';
+import type { Vec2D } from '../../interface/vector';
 import { BulletSpawner } from './BulletSpawner.model';
-import { Transform } from './component/common/Transform';
-import { angleToVector } from 'src/util/angle';
+import { Transform } from '../component/common/Transform';
+import { angleToVector } from '../../util/angle';
 
 export class Gun extends GameObject {
   /**
@@ -35,7 +35,7 @@ export class Gun extends GameObject {
 
   fire(): Bullet[] {
     const transform = this.getComponent(Transform);
-    if (!transform) return;
+    if (!transform) return [];
 
     this.bulletSpawner.setBulletInitialPosition(transform.getPosition());
     this.bulletSpawner.setBulletInitialDirection(transform.getDirection());

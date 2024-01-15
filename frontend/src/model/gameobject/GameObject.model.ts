@@ -1,9 +1,10 @@
-import { Component } from './component/Component';
-import type { Constructor } from '../interface/ctor';
-import { Transform } from './component/common/Transform';
+import { Component } from '../component/Component';
+import type { IConstructor } from '../../interface/ctor';
+import { Transform } from '../component/common/Transform';
+import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class GameObject {
-  protected components: Map<Constructor<Component>, Component>;
+  protected components: Map<IConstructor<Component>, Component>;
   protected obj_expired: boolean;
 
   public get transform() {
@@ -13,6 +14,7 @@ export class GameObject {
   constructor() {
     this.components = new Map();
     this.obj_expired = false;
+    ObjectManager.instance.manageObject(this);
   }
 
   /**
@@ -32,12 +34,12 @@ export class GameObject {
     this.onExpired();
   }
 
-  getComponent<T extends Component>(ctor: Constructor<T>): T | undefined {
+  getComponent<T extends Component>(ctor: IConstructor<T>): T | undefined {
     return this.components.get(ctor) as T | undefined;
   }
 
   addComponent(component: Component) {
-    const ctor = component.constructor as Constructor<Component>;
+    const ctor = component.constructor as IConstructor<Component>;
     // 생성자가 없으면 돌아간다.
     if (!ctor) return;
 
@@ -45,7 +47,7 @@ export class GameObject {
     component.setGameObject(this);
   }
 
-  deleteComponent(ctor: Constructor<Component>) {
+  deleteComponent(ctor: IConstructor<Component>) {
     const component = this.components.get(ctor);
     // 컴포넌트가 없으면 돌아간다.
     if (!component) return;

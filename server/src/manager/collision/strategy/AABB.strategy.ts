@@ -1,4 +1,6 @@
-import { CollisibleGameObject } from 'src/model/CollisibleGameObject.model';
+import { GameObject } from 'src/model/GameObject.Model';
+import { Collider } from 'src/model/component/common/Collider';
+
 import type { ICollisionDetectionStrategy } from './collision.strategy';
 import type { Vec2D } from 'src/interface/vector';
 
@@ -6,18 +8,25 @@ import type { Vec2D } from 'src/interface/vector';
  * 2차원 월드 좌표축에 나란한 bounding box를 구한 후 좌표를 계산하는 전략
  */
 export class AABBDetectionStrategy implements ICollisionDetectionStrategy {
-  checkCollision(obj1: CollisibleGameObject, obj2: CollisibleGameObject) {
-    const collider1 = obj1.getCollider();
-    const collider2 = obj2.getCollider();
+  checkCollision(obj1: GameObject, obj2: GameObject) {
+    const transform1 = obj1.transform;
+    const transform2 = obj2.transform;
+
+    if (!transform1 || !transform2) return false; // transform이 있어야만 검사 가능
+
+    const collider1 = obj1.getComponent(Collider);
+    const collider2 = obj2.getComponent(Collider);
+
+    if (!collider1 || !collider2) return false; // 콜라이더 둘 다 있어야 검사 가능
+
+    const col_data1 = collider1.getCollider();
+    const col_data2 = collider2.getCollider();
 
     // 다각형이 아니면 검사 대상이 아님
-    if (collider1.length < 3 || collider2.length < 3) return false;
+    if (col_data1.length < 3 || col_data2.length < 3) return false;
 
-    const position1 = obj1.getPosition();
-    const position2 = obj2.getPosition();
-
-    const bv1 = this.getBoundingValues(position1, collider1);
-    const bv2 = this.getBoundingValues(position2, collider2);
+    const bv1 = this.getBoundingValues(transform1.getPosition(), col_data1);
+    const bv2 = this.getBoundingValues(transform2.getPosition(), col_data2);
 
     return this.checkIntersect(bv1, bv2);
   }

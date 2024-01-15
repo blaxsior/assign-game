@@ -1,7 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
 
-import { AABBDetectionStrategy } from '../collision/strategy/AABB.strategy';
-import { CollisionManager } from '../collision/CollisionManager';
+import { AABBDetectionStrategy } from 'src/manager/collision/strategy/AABB.strategy';
+import { CollisionManager } from 'src/manager/collision/CollisionManager';
 
 import { GameObject } from '../model/GameObject.Model';
 import { Player } from '../model/Player.model';
@@ -15,8 +15,8 @@ import { LimitCountBulletSpawner } from '../model/LimitBulletSpawner.model';
 import { UserAction } from '../interface/user-action';
 import type { Vec2D } from '../interface/vector';
 import type { NumRange } from '../interface/range';
-import { GameData } from 'src/interface/packet';
-import { BulletInfo } from 'src/model/BulletSpawner.model';
+import { GameData } from '../interface/packet';
+import { BulletInfo } from '../model/BulletSpawner.model';
 
 @Injectable({
   scope: Scope.TRANSIENT,
@@ -127,7 +127,7 @@ export class GameManager {
   /**
    * 게임을 한 프레임 만큼 실행한다.
    */
-  run(): GameData {
+  run() {
     if (!this.game_running || this.player.isDead()) return; // 적이 죽었거나, 게임이 실행 중이 아님
     // 적을 생성하고 할당하는 로직
     const new_enemies = this.enemySpawner.spawn();
