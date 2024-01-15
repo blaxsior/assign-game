@@ -41,8 +41,8 @@ export class UpPanelView extends HTMLElement {
       `;
   }
   render(data: UpPanelData) {
-    if(data.hp !== undefined) this.hpView.render(data.hp);
-    if(data.score !== undefined) this.scoreView.render(data.score);
+    if(data.hp !== undefined) this.hpView.render(`${data.hp}`);
+    if(data.score !== undefined) this.scoreView.render(`${data.score}`);
   }
 }
 

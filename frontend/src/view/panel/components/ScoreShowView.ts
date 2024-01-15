@@ -32,8 +32,8 @@ export class ShowInfoView extends HTMLElement {
       `;
   }
 
-  render(data: number) {
-    this.valueElem.value = `${data}`;
+  render(data: string) {
+    this.valueElem.value = data;
   }
 }
 
