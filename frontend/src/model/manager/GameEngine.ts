@@ -60,6 +60,7 @@ export class GameEngine {
   }
   update() {
     const objects = this.objectManager.getObjects();
+    // update을 구현한 객체들의 동작을 처리한다.
     for(const object of objects) {
       object.update?.();
     }

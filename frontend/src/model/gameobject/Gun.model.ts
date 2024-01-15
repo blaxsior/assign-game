@@ -1,5 +1,4 @@
 import { GameObject } from './GameObject.model';
-import { Bullet } from './Bullet.model';
 
 import type { NumRange } from '../../interface/range';
 import type { Vec2D } from '../../interface/vector';
@@ -33,14 +32,14 @@ export class Gun extends GameObject {
     this.bulletSpawner = bulletSpawner;
   }
 
-  fire(): Bullet[] {
+  fire() {
     const transform = this.getComponent(Transform);
     if (!transform) return [];
 
     this.bulletSpawner.setBulletInitialPosition(transform.getPosition());
     this.bulletSpawner.setBulletInitialDirection(transform.getDirection());
 
-    return this.bulletSpawner.spawn();
+    this.bulletSpawner.spawn();
   }
 
   rotate(angle: number) {

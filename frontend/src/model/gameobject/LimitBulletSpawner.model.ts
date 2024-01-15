@@ -2,6 +2,7 @@ import { Bullet } from './Bullet.model';
 import { GameObject } from './GameObject.model';
 
 import { type BulletInfo, BulletSpawner } from './BulletSpawner.model';
+import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class LimitCountBulletSpawner extends BulletSpawner {
   private max_count: number;
@@ -16,19 +17,20 @@ export class LimitCountBulletSpawner extends BulletSpawner {
     this.bullets = [];
     this.max_count = max_count;
   }
-  spawn() {
+  spawn(): void {
     this.removeExpiredBullets();
-    if (!this.canSpawn()) return [];
+    if (!this.canSpawn()) return;
     if (!this.bullet_direction || !this.bullet_position) {
       throw new Error('bullet_position and direction must be set');
     }
 
-    const bullet = new Bullet(
+    const bullet = ObjectManager.instance.createObject(
+      Bullet,
       this.bullet_position,
       this.bullet_direction,
       this.bullet_collider,
       this.bullet_demage,
-      this.bullet_speed,
+      this.bullet_speed
     );
     this.bullets.push(bullet);
 

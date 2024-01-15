@@ -5,6 +5,7 @@ import type { ISpawner } from '../../interface/spawner';
 import type { Vec2D } from '../../interface/vector';
 import type { NumRange } from '../../interface/range';
 import { GameObject } from './GameObject.model';
+import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class EnemySpawner extends GameObject implements ISpawner {
   /**
@@ -36,8 +37,9 @@ export class EnemySpawner extends GameObject implements ISpawner {
     this.enemy_ypos = enemyInfo.ypos;
   }
 
-  spawn() {
-    if (!this.canSpawn()) return [];
+
+  spawn(): void {
+    if (!this.canSpawn()) return;
     // 생성 가능 시간 갱신
     this.available_spawn_time = this.calculateNextSpawnTime();
 
@@ -47,13 +49,14 @@ export class EnemySpawner extends GameObject implements ISpawner {
 
     const enemy_speed = pickRandomNumberInRange(this.range_enemy_speed);
 
-    const enemy = new Enemy(
+    ObjectManager.instance.createObject(
+      Enemy,
       enemy_position,
       this.enemy_direction,
       this.enemy_collider,
       this.enemy_demage,
       enemy_speed,
-      this.enemy_hp,
+      this.enemy_hp
     ); // 적 생성
   }
 
@@ -67,6 +70,10 @@ export class EnemySpawner extends GameObject implements ISpawner {
   private calculateNextSpawnTime(): number {
     const SEC = 1000;
     return Date.now() + pickRandomNumberInRange(this.range_time_interval) * SEC;
+  }
+
+  update = () => {
+    this.spawn();
   }
 }
 
