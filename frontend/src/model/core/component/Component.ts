@@ -1,6 +1,6 @@
-import { GameObject } from '../gameobject/GameObject.model';
+import { GameObject } from '../GameObject.model';
 
-export class Component {
+export abstract class Component {
   private _gameObject: GameObject | null;
 
   constructor() {

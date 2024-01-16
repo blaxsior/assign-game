@@ -1,12 +1,11 @@
 import { Bullet } from './Bullet.model';
-import { GameObject } from './GameObject.model';
+import { GameObject } from '../core/GameObject.model';
 
 import { type BulletInfo, BulletSpawner } from './BulletSpawner.model';
 import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class LimitCountBulletSpawner extends BulletSpawner {
   private max_count: number;
-
   /**
    * 만료된 총알 오브젝트를 알아내기 위한 배열. 총알 자체 기능이 필요한게 아니므로 GameObject로 받음.
    */

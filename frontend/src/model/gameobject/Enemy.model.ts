@@ -1,7 +1,7 @@
 import { Bullet } from './Bullet.model';
-import { GameObject } from './GameObject.model';
-import { Transform } from '../component/common/Transform';
-import { Collider } from '../component/common/Collider';
+import { GameObject } from '../core/GameObject.model';
+import { Transform } from '../core/component/Transform';
+import { Collider } from '../core/component/Collider';
 
 import type { Vec2D } from '../../interface/vector';
 
@@ -48,11 +48,11 @@ export class Enemy extends GameObject {
     transform.translate(dist);
   }
 
-  update = () => {
+  override update() {
     this.move();
   };
 
-  onCollision = (gameObject: GameObject) => {
+  override onCollision(gameObject: GameObject) {
     if (!(gameObject instanceof Bullet)) return;
     const bullet = gameObject;
     // 총알과 충돌한 경우, 데미지를 입는다.

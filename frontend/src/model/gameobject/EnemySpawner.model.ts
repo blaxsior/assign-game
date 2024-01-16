@@ -4,7 +4,7 @@ import { pickRandomNumberInRange } from '../../util/math';
 import type { ISpawner } from '../../interface/spawner';
 import type { Vec2D } from '../../interface/vector';
 import type { NumRange } from '../../interface/range';
-import { GameObject } from './GameObject.model';
+import { GameObject } from '../core/GameObject.model';
 import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class EnemySpawner extends GameObject implements ISpawner {
@@ -71,8 +71,8 @@ export class EnemySpawner extends GameObject implements ISpawner {
     const SEC = 1000;
     return Date.now() + pickRandomNumberInRange(this.range_time_interval) * SEC;
   }
-
-  update = () => {
+  
+  override update() {
     this.spawn();
   }
 }

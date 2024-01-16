@@ -1,13 +1,13 @@
-import { Component } from '../component/Component';
-import type { IConstructor } from '../../interface/ctor';
-import { Transform } from '../component/common/Transform';
+import { Component } from './component/Component';
+import type { IConstructor } from '../../interface/ctor'; 
+import { Transform } from './component/Transform';
 // import { ObjectManager } from '../manager/object/ObjectManager';
 
 export class GameObject {
   protected components: Map<IConstructor<Component>, Component>;
   protected obj_expired: boolean;
 
-  public get transform() {
+  public get transform(): Readonly<Transform> | undefined {
     return this.getComponent(Transform);
   }
 
@@ -34,8 +34,8 @@ export class GameObject {
     this.onExpired();
   }
 
-  getComponent<T extends Component>(ctor: IConstructor<T>): T | undefined {
-    return this.components.get(ctor) as T | undefined;
+  getComponent<T extends Component>(ctor: IConstructor<T>): Readonly<T> | undefined {
+    return this.components.get(ctor) as Readonly<T> | undefined;
   }
 
   addComponent(component: Component) {
@@ -45,6 +45,10 @@ export class GameObject {
 
     this.components.set(ctor, component);
     component.setGameObject(this);
+  }
+
+  hasComponent<T extends Component>(ctor: IConstructor<T>): boolean {
+    return this.components.has(ctor);
   }
 
   deleteComponent(ctor: IConstructor<Component>) {
@@ -59,10 +63,10 @@ export class GameObject {
   /**
    * 한 틱마다 실행되는 메서드. 실제 객체에서 따로 구현
    */
-  update?: () => void;
+  update?(): void;
 
   /**
    * 충돌 발생 시 실행되는 메서드. 실제 객체에서 따로 구현
    */
-  onCollision?: (gameObject: GameObject) => void;
+  onCollision?(gameObject: GameObject): void;
 }

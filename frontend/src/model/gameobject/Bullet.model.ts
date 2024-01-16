@@ -1,6 +1,6 @@
-import { GameObject } from './GameObject.model';
-import { Transform } from '../component/common/Transform';
-import { Collider } from '../component/common/Collider';
+import { GameObject } from '../core/GameObject.model';
+import { Transform } from '../core/component/Transform';
+import { Collider } from '../core/component/Collider';
 
 import { Enemy } from './Enemy.model';
 
@@ -38,11 +38,11 @@ export class Bullet extends GameObject {
     transform.translate(dist);
   }
 
-  update = () => {
+  override update() {
     this.move();
   };
 
-  onCollision = (gameObject: GameObject) => {
+  override onCollision(gameObject: GameObject) {
     if (gameObject instanceof Enemy) {
       // 총알은 적에게 닿으면 사라진다.
       // 데미지를 처리하는 책임은 체력을 가진 Enemy가 처리

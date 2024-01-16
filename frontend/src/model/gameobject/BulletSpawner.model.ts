@@ -1,6 +1,6 @@
 import type { ISpawner } from '../../interface/spawner';
 import type { Vec2D } from '../../interface/vector';
-import { GameObject } from './GameObject.model';
+import { GameObject } from '../core/GameObject.model';
 
 export abstract class BulletSpawner extends GameObject implements ISpawner {
   protected bullet_position: Vec2D | null;

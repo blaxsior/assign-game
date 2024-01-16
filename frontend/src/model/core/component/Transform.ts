@@ -1,4 +1,4 @@
-import { Component } from '../Component';
+import { Component } from './Component';
 import { angleToRad, radToVector, vectorToRad } from '../../../util/angle';
 
 import type { Vec2D } from '../../../interface/vector'; 

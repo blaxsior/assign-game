@@ -1,4 +1,4 @@
-import { GameObject } from './GameObject.model';
+import { GameObject } from '../core/GameObject.model';
 
 export class Player extends GameObject {
   private hp: number;

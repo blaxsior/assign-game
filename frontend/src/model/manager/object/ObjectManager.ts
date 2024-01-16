@@ -1,5 +1,5 @@
 import { IConstructor } from "../../../interface/ctor";
-import { GameObject } from "../../gameobject/GameObject.model";
+import { GameObject } from "../../core/GameObject.model";
 
 export class ObjectManager {
   private gameObjects: GameObject[];

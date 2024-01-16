@@ -1,4 +1,4 @@
-import { Component } from '../Component';
+import { Component } from './Component';
 import { Vec2D } from '../../../interface/vector'; 
 
 export class Collider extends Component {

@@ -1,18 +1,21 @@
-import { GameObject } from '../../gameobject/GameObject.model';
+import { Collider } from '../../core/component/Collider'; 
+import { GameObject } from '../../core/GameObject.model';
 import type { ICollisionDetectionStrategy } from './strategy/collision.strategy';
 
 export class CollisionManager {
   constructor(private strategy: ICollisionDetectionStrategy) {}
 
   detectAndHandleCollision(objects: readonly GameObject[]) {
-    for (let i = 0; i < objects.length - 1; i++) {
-      const obj1 = objects[i];
-      // 객체가 비활성화 or 제거되는 경우는 스킵
+    const collisibleObjects = objects.filter(it => !it.isExpired() && it.hasComponent(Collider));
+
+    for (let i = 0; i < collisibleObjects.length - 1; i++) {
+      const obj1 = collisibleObjects[i];
+      // 객체가 비활성화 or 제거된 경우는 스킵
       if (obj1.isExpired()) continue;
 
       for (let j = i + 1; j < objects.length; j++) {
-        const obj2 = objects[j];
-        // 객체가 비활성화 or 제거되는 경우는 스킵
+        const obj2 = collisibleObjects[j];
+        // 객체가 비활성화 or 제거된 경우는 스킵
         if (obj2.isExpired()) continue;
 
         // 충돌이 발생한 경우, 양측에 충돌을 알린다.
