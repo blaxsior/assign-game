@@ -52,11 +52,7 @@ export class GameEngine {
     };
   }
 
-  /**
-   * 게임 내 필요한 객체를 초기화한다.
-   */
   initGame() {
-    // 충돌 매니저 설정
   }
 
   update() {

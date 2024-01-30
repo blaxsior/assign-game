@@ -51,4 +51,8 @@ export class LimitCountBulletSpawner extends BulletSpawner {
   canSpawn(): boolean {
     return this.bullets.length < this.max_count;
   }
+
+  override update(): void {
+    this.spawn();
+  }
 }

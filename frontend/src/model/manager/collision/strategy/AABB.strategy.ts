@@ -1,8 +1,8 @@
-import { GameObject } from 'src/model/GameObject.Model';
-import { Collider } from 'src/model/component/common/Collider';
 
+import { Vec2D } from '../../../../interface/vector';
+import { GameObject } from '../../../core/GameObject.model';
+import { Collider } from '../../../core/component/Collider';
 import type { ICollisionDetectionStrategy } from './collision.strategy';
-import type { Vec2D } from 'src/interface/vector';
 
 /**
  * 2차원 월드 좌표축에 나란한 bounding box를 구한 후 좌표를 계산하는 전략

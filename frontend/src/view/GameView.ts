@@ -1,8 +1,8 @@
-import { DownPanelView } from "./panel/DownPanelView";
-import { UpPanelView } from "./panel/UpPanelView";
+import { DownPanelData, DownPanelView } from "./panel/DownPanelView";
+import { UpPanelData, UpPanelView } from "./panel/UpPanelView";
 import { GameScreenView } from "./screen/GameScreenView";
 
-import type { DownPanelData, UpPanelData, viewData } from "../interface/packet";
+import type { GameData } from "../interface/packet";
 
 
 export class GameView {
@@ -22,7 +22,7 @@ export class GameView {
     rootElement.appendChild(this.downPanelView);
   }
 
-  render(data: viewData) {
+  render(data: GameData) {
     const upPanelData: UpPanelData = {
       hp: data.hp,
       score: data.score

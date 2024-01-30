@@ -36,8 +36,9 @@ export class EnemySpawner extends GameObject implements ISpawner {
     this.range_enemy_speed = enemyInfo.range_speed;
     this.enemy_ypos = enemyInfo.ypos;
   }
-
-
+  /**
+   * 객체를 생성하는 메서드
+   */
   spawn(): void {
     if (!this.canSpawn()) return;
     // 생성 가능 시간 갱신
@@ -59,13 +60,12 @@ export class EnemySpawner extends GameObject implements ISpawner {
       this.enemy_hp
     ); // 적 생성
   }
-
   canSpawn(): boolean {
     return Date.now() >= this.available_spawn_time;
   }
 
   /**
-   * 다음 번 생성될 시간을 얻는 함수
+   * 다음 번 생성될 시간을 얻는 메서드
    */
   private calculateNextSpawnTime(): number {
     const SEC = 1000;

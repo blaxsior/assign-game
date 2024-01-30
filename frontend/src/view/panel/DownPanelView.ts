@@ -1,5 +1,8 @@
-import { DownPanelData } from "../../interface/packet";
 import { BarView } from "./components/BarView";
+
+export type DownPanelData = {
+  angle?: number;
+};
 
 export class DownPanelView extends HTMLElement {
   private barView: BarView;

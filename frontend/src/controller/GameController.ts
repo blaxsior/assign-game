@@ -1,4 +1,4 @@
-import { viewData } from "../interface/packet";
+import { GameData } from "../interface/packet";
 import { GameView } from "../view/GameView";
 import { Socket } from 'socket.io-client';
 
@@ -53,7 +53,7 @@ export class GameController {
     });
 
     // 뷰를 업데이트하는 액션을 클라이언트 - 서버 사이에 연결한다.
-    this.socket.on('run', (data: viewData) => {
+    this.socket.on('run', (data: GameData) => {
       this.updateView(data);
     });
 
@@ -71,7 +71,7 @@ export class GameController {
     this.socket.emit('input', action);
   }
 
-  updateView(data: viewData) {
+  updateView(data: GameData) {
     this.gameView.render(data);
   }
 }

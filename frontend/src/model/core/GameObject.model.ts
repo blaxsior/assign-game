@@ -12,7 +12,7 @@ export class GameObject {
   }
 
   constructor() {
-    this.components = new Map();
+    this.components = new Map<IConstructor<Component>, Component>();
     this.obj_expired = false;
     // ObjectManager.instance.manageObject(this);
   }
@@ -20,7 +20,7 @@ export class GameObject {
   /**
    * 게임 오브젝트가 만료되었을 때 실행되는 메서드
    */
-  protected onExpired() {}
+  protected onExpired?(): void;
 
   isExpired() {
     return this.obj_expired;
@@ -31,7 +31,7 @@ export class GameObject {
    */
   markExpired() {
     this.obj_expired = true;
-    this.onExpired();
+    this.onExpired?.();
   }
 
   getComponent<T extends Component>(ctor: IConstructor<T>): Readonly<T> | undefined {

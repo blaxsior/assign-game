@@ -1,5 +1,9 @@
-import { UpPanelData } from "../../interface/packet";
 import { ShowInfoView } from "./components/ScoreShowView";
+
+export type UpPanelData = {
+  hp?: number;
+  score?: number;
+};
 
 export class UpPanelView extends HTMLElement {
   private hpView: ShowInfoView;

@@ -52,7 +52,8 @@ export class Enemy extends GameObject {
     this.move();
   };
 
-  override onCollision(gameObject: GameObject) {
+  override onCollision(collider: Collider) {
+    const gameObject = collider.gameObject;
     if (!(gameObject instanceof Bullet)) return;
     const bullet = gameObject;
     // 총알과 충돌한 경우, 데미지를 입는다.
