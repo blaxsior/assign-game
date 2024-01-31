@@ -16,7 +16,7 @@ export class LimitCountBulletSpawner extends BulletSpawner {
     this.bullets = [];
     this.max_count = max_count;
   }
-  spawn(): void {
+  override spawn(): void {
     this.removeExpiredBullets();
     if (!this.canSpawn()) return;
     if (!this.bullet_direction || !this.bullet_position) {
