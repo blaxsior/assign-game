@@ -11,7 +11,7 @@ import type { Vec2D } from '../interface/vector';
 /**
  * 충돌과 관련된 정보를 추가적으로 가지는 오브젝트.
  */
-export abstract class CollisibleGameObject extends GameObject {
+export abstract class CollidableGameObject extends GameObject {
   private collider: Vec2D[];
 
   constructor(position: Vec2D, direction: Vec2D, collider: Vec2D[]) {
@@ -28,5 +28,5 @@ export abstract class CollisibleGameObject extends GameObject {
    * @param obj 자신과 충돌한 게임 오브젝트
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onCollision(obj: CollisibleGameObject) {}
+  onCollision(obj: CollidableGameObject) {}
 }

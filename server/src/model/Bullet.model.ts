@@ -1,9 +1,9 @@
-import { CollisibleGameObject } from './CollisibleGameObject.model';
+import { CollidableGameObject } from './CollidableGameObject.model';
 import { Enemy } from './Enemy.model';
 
 import type { Vec2D } from '../interface/vector';
 
-export class Bullet extends CollisibleGameObject {
+export class Bullet extends CollidableGameObject {
   private demage: number;
   private speed: number;
 
@@ -31,7 +31,7 @@ export class Bullet extends CollisibleGameObject {
     this.position[1] += moveY;
   }
 
-  override onCollision(gameObject: CollisibleGameObject) {
+  override onCollision(gameObject: CollidableGameObject) {
     if (gameObject instanceof Enemy) {
       // 총알은 적에게 닿으면 사라진다.
       // 데미지를 처리하는 책임은 체력을 가진 Enemy가 처리

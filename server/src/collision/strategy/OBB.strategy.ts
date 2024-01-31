@@ -1,10 +1,10 @@
-import { CollisibleGameObject } from '../../model/CollisibleGameObject.model';
+import { CollidableGameObject } from '../../model/CollidableGameObject.model';
 
 import type { ICollisionDetectionStrategy } from './collision.strategy';
 import { Vec2D } from '../../interface/vector';
 
 export class OBBDetectionStrategy implements ICollisionDetectionStrategy {
-  checkCollision(obj1: CollisibleGameObject, obj2: CollisibleGameObject) {
+  checkCollision(obj1: CollidableGameObject, obj2: CollidableGameObject) {
     const collider1 = obj1.getCollider();
     const collider2 = obj2.getCollider();
 

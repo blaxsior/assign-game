@@ -1,4 +1,4 @@
-import { CollisibleGameObject } from 'src/model/CollisibleGameObject.model';
+import { CollidableGameObject } from 'src/model/CollidableGameObject.model';
 import type { ICollisionDetectionStrategy } from './collision.strategy';
 import type { Vec2D } from 'src/interface/vector';
 
@@ -6,7 +6,7 @@ import type { Vec2D } from 'src/interface/vector';
  * 2차원 월드 좌표축에 나란한 bounding box를 구한 후 좌표를 계산하는 전략
  */
 export class AABBDetectionStrategy implements ICollisionDetectionStrategy {
-  checkCollision(obj1: CollisibleGameObject, obj2: CollisibleGameObject) {
+  checkCollision(obj1: CollidableGameObject, obj2: CollidableGameObject) {
     const collider1 = obj1.getCollider();
     const collider2 = obj2.getCollider();
 

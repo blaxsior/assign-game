@@ -1,10 +1,10 @@
-import { CollisibleGameObject } from '../model/CollisibleGameObject.model';
+import { CollidableGameObject } from '../model/CollidableGameObject.model';
 import type { ICollisionDetectionStrategy } from './strategy/collision.strategy';
 
 export class CollisionManager {
   constructor(private strategy: ICollisionDetectionStrategy) {}
 
-  detectAndHandleCollision(objects: CollisibleGameObject[]) {
+  detectAndHandleCollision(objects: CollidableGameObject[]) {
     for (let i = 0; i < objects.length - 1; i++) {
       const obj1 = objects[i];
       // 객체가 비활성화 or 제거되는 경우는 스킵
