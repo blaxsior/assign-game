@@ -15,6 +15,7 @@ export class EnemySpawner implements ISpawner<Enemy> {
   // 적 생성 시 사용되는 정보들
   private enemy_hp: number;
   private enemy_demage: number;
+  private enemy_score: number;
   private enemy_direction: Vec2D;
   private enemy_collider: Vec2D[];
   private range_enemy_xpos: NumRange;
@@ -27,6 +28,7 @@ export class EnemySpawner implements ISpawner<Enemy> {
 
     this.enemy_hp = enemyInfo.hp;
     this.enemy_demage = enemyInfo.demage;
+    this.enemy_score = enemyInfo.score;
     this.enemy_direction = enemyInfo.direction;
     this.enemy_collider = enemyInfo.collider;
     this.range_enemy_xpos = enemyInfo.range_xpos;
@@ -52,6 +54,7 @@ export class EnemySpawner implements ISpawner<Enemy> {
       this.enemy_demage,
       enemy_speed,
       this.enemy_hp,
+      this.enemy_score,
     ); // 적 생성
 
     return [enemy];
@@ -73,6 +76,7 @@ export class EnemySpawner implements ISpawner<Enemy> {
 export type EnemyInfo = {
   hp: number;
   demage: number;
+  score: number;
   direction: Vec2D;
   collider: Vec2D[];
   range_speed: NumRange;

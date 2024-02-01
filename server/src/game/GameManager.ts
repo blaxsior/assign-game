@@ -115,6 +115,7 @@ export class GameManager {
         [-30, 20],
       ],
       hp: 10,
+      score: 1,
       range_speed: { from: 1, to: 6 },
       range_xpos: { from: 50, to: this.screen_width - 50 },
       ypos: 50,
@@ -147,13 +148,18 @@ export class GameManager {
       ...this.enemies,
       ...this.bullets,
     ]);
-
+    
     // 죽은 적의 수만큼 점수를 획득한다.
-    let score = 0;
+    // let score = 0;
     for (const enemy of this.enemies) {
-      if (enemy.isDead()) score += 1;
+      if (enemy.isDead()) {
+      console.log(enemy.getScore());
+
+        this.player.addScore(enemy.getScore());
+      }
+
     }
-    this.player.addScore(score);
+    // this.player.addScore(score);
 
     // 화면 바깥에 있는 게임 오브젝트들을 마킹한다.
     this.expireOutObjs(this.enemies);

@@ -7,6 +7,7 @@ export class Enemy extends CollidableGameObject {
   private demage: number;
   private speed: number;
   private hp: number;
+  private score: number;
   constructor(
     position: Vec2D,
     direction: Vec2D,
@@ -14,11 +15,13 @@ export class Enemy extends CollidableGameObject {
     demage: number,
     speed: number,
     hp: number,
+    score: number,
   ) {
     super(position, direction, collider);
     this.demage = demage;
     this.speed = speed;
     this.hp = hp;
+    this.score = score;
   }
 
   takeDemage(demage: number) {
@@ -28,6 +31,10 @@ export class Enemy extends CollidableGameObject {
 
   getDemage() {
     return this.demage;
+  }
+
+  getScore() {
+    return this.score;
   }
 
   isDead() {
